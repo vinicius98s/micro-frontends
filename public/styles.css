@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
 * {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
@@ -8,8 +10,40 @@
   padding: 0;
 }
 
+body {
+  background: #191920;
+}
+
+body::after {
+  content: "";
+  width: 100vw;
+  height: 40%;
+  background: #141419;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transform: rotateZ(-6deg);
+  box-shadow: 0 -10vw 0 10vw #141419;
+}
+
 html,
 body,
-#root {
+#react,
+#vue {
   min-height: 100%;
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 0 20px 50px;
+  overflow-x: hidden;
+}
+
+body,
+input,
+button {
+  font: 14px sans-serif;
+}
+
+button {
+  cursor: pointer;
 }

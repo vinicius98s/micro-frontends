@@ -29,7 +29,7 @@ module.exports = {
         test: /\.s[ac]ss$/i,
         use: [
           "vue-style-loader",
-          "css-loader",
+          "css-loader?url=false",
           "sass-loader",
           {
             loader: "sass-resources-loader",
@@ -39,7 +39,7 @@ module.exports = {
           }
         ]
       },
-      { test: /.*\.(gif|png|jpe?g)$/i, use: "file-loader" }
+      { test: /.*\.(gif|svg|png|jpe?g)$/i, use: "file-loader" }
     ]
   },
   plugins: [new VueLoaderPlugin()]

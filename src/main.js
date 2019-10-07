@@ -7,24 +7,25 @@ import VueApp from "./vue/App.vue";
 
 function render() {
   document.body.innerHTML = "";
-  const reactRoot = document.createElement("div");
-  reactRoot.id = "react";
-  document.body.appendChild(reactRoot);
-
-  const vueRoot = document.createElement("div");
-  vueRoot.id = "vue";
-  document.body.appendChild(vueRoot);
 
   const currentRoute = window.location.pathname;
 
   switch (currentRoute) {
-    case "/vue":
+    case "/cart":
+      const vueRoot = document.createElement("div");
+      vueRoot.id = "vue";
+      document.body.appendChild(vueRoot);
+
       return new Vue({
         el: "#vue",
         render: h => h(VueApp)
       });
     case "/":
     default:
+      const reactRoot = document.createElement("div");
+      reactRoot.id = "react";
+      document.body.appendChild(reactRoot);
+
       return ReactDOM.render(<ReactApp />, document.getElementById("react"));
   }
 }
