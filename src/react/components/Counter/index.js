@@ -3,8 +3,10 @@ import React from "react";
 import useReducer from "../../../utils/useReducer";
 import { addCounter, decreaseCounter } from "../../../store/actions/counter";
 
+import DisplayCounter from "../DisplayCounter";
+
 export default function Counter() {
-  const [store, dispatch] = useReducer();
+  const [, dispatch] = useReducer();
 
   return (
     <>
@@ -15,6 +17,7 @@ export default function Counter() {
       </button>
       <br />
       <br />
+      <DisplayCounter />
     </>
   );
 }

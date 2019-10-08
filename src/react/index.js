@@ -8,7 +8,6 @@ export default function App() {
     <>
       <h1>React App</h1>
       <Counter />
-      <button onClick={() => routes.to("/vue")}>Go check the counter</button>
     </>
   );
 }

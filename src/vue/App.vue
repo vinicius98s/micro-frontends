@@ -1,9 +1,5 @@
- 1<template>
-  <div>
-    <h1>Vue app</h1>
-    <h1>Counter: {{ counter }}</h1>
-    <button @click="routeChange">Go to react page</button>
-  </div>
+ <template>
+  <h1>Vue display counter: {{ counter }}</h1>
 </template>
 
 <script>
@@ -17,13 +13,12 @@ export default {
     };
   },
   methods: {
-    routeChange() {
-      routes.to("/");
+    updateCounter(value) {
+      this.counter = value;
     }
   },
   mounted() {
-    const [store] = useReducer();
-    this.counter = store.counter;
+    useReducer(this.updateCounter, "counter");
   }
 };
 </script>

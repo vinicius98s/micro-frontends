@@ -18,14 +18,13 @@ function render() {
   const currentRoute = window.location.pathname;
 
   switch (currentRoute) {
-    case "/vue":
-      return new Vue({
+    case "/":
+    default:
+      ReactDOM.render(<ReactApp />, document.getElementById("react"));
+      new Vue({
         el: "#vue",
         render: h => h(VueApp)
       });
-    case "/":
-    default:
-      return ReactDOM.render(<ReactApp />, document.getElementById("react"));
   }
 }
 
