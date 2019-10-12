@@ -29,8 +29,7 @@ body::after {
 
 html,
 body,
-#react,
-#vue {
+div > body {
   min-height: 100%;
   max-width: 1020px;
   margin: 0 auto;
@@ -46,4 +45,8 @@ button {
 
 button {
   cursor: pointer;
+}
+
+h1 {
+  color: white;
 }

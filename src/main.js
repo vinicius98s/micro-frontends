@@ -5,8 +5,10 @@ import Vue from "vue";
 import ReactApp from "./react";
 import VueApp from "./vue/App.vue";
 
+import "./components/header";
+
 function render() {
-  document.body.innerHTML = "";
+  document.body.innerHTML = `<custom-header></custom-header>`;
 
   const currentRoute = window.location.pathname;
 
