@@ -9,6 +9,10 @@ module.exports = {
     filename: "bundle.js"
   },
   devServer: {
+    hot: true,
+    watchOptions: {
+      poll: true
+    },
     historyApiFallback: {
       index: "index.html"
     },
@@ -19,9 +23,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
+        use: "babel-loader"
       },
       { test: /\.vue$/, use: "vue-loader" },
       { test: /\.css$/, use: ["vue-style-loader", "css-loader"] },
@@ -29,10 +31,13 @@ module.exports = {
         test: /\.s[ac]ss$/i,
         use: [
           "vue-style-loader",
-          "css-loader?url=false",
+          "css-loader",
           "sass-loader",
           {
-            loader: "sass-resources-loader"
+            loader: "sass-resources-loader",
+            options: {
+              resources: ["./src/**/*.scss"]
+            }
           }
         ]
       },

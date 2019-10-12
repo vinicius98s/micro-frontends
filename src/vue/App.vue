@@ -1,11 +1,14 @@
 <template>
-  <div>
-    <h1>Vue app</h1>
-  </div>
+  <Cart />
 </template>
 
 <script>
-export default {};
+import Cart from "./components/Cart.vue";
+export default {
+  components: {
+    Cart
+  }
+};
 </script>
 
 <style>
