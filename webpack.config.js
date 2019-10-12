@@ -32,10 +32,7 @@ module.exports = {
           "css-loader?url=false",
           "sass-loader",
           {
-            loader: "sass-resources-loader",
-            options: {
-              resources: ["./src/scss/globals.scss"]
-            }
+            loader: "sass-resources-loader"
           }
         ]
       },
