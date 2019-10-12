@@ -1,5 +1,6 @@
 import logo from "../assets/images/logo.svg";
 import route from "../routes";
+import useReducer from "../utils/useReducer";
 
 const template = document.createElement("template");
 
@@ -60,8 +61,8 @@ template.innerHTML = `
 
     <div class="cart" as="button">
       <div>
-        <strong>Meu carrinho</strong>
-        <span id="total-items">3 itens</span>
+        <strong>My cart</strong>
+        <span id="total-items">0 items</span>
       </div>
       <ion-icon name="basket" size="large"></ion-icon>
     </div>
@@ -74,22 +75,40 @@ class Header extends HTMLElement {
     const shadowRoot = this.attachShadow({ mode: "open" });
     shadowRoot.appendChild(template.content.cloneNode(true));
 
-    this.cart = shadowRoot.querySelector(".cart");
-    this.totalItems = shadowRoot.querySelector("#total-items");
-    this.logoButton = shadowRoot.querySelector("button");
-  }
+    this._updateCartQuantity = this._updateCartQuantity.bind(this);
 
-  navigateToCart() {
-    route.to("/cart");
-  }
-
-  navigateHome() {
-    route.to("/");
+    this.$cartButton = shadowRoot.querySelector(".cart");
+    this.$totalItems = shadowRoot.querySelector("#total-items");
+    this.$logoButton = shadowRoot.querySelector("button");
   }
 
   connectedCallback() {
-    this.logoButton.addEventListener("click", this.navigateHome);
-    this.cart.addEventListener("click", this.navigateToCart);
+    const [{ cart }] = useReducer(this._updateCartQuantity, "cart");
+
+    if (cart.length) {
+      this._updateCartQuantity(cart);
+    }
+
+    this.$logoButton.addEventListener("click", this._navigateHome);
+    this.$cartButton.addEventListener("click", this._navigateToCart);
+  }
+
+  disconnectedCallback() {
+    this.$logoButton.removeEventListener("click", this._navigateHome);
+    this.$cartButton.removeEventListener("click", this._navigateToCart);
+  }
+
+  _updateCartQuantity(cart) {
+    const productsQuantity = cart.length;
+    this.$totalItems.innerHTML = `${productsQuantity} items`;
+  }
+
+  _navigateToCart() {
+    route.to("/cart");
+  }
+
+  _navigateHome() {
+    route.to("/");
   }
 }
 
