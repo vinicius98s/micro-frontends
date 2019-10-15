@@ -39,6 +39,7 @@ export const ProductsContainer = styled.ul`
       border-radius: 4px;
       overflow: hidden;
       margin-top: auto;
+      height: 40px;
 
       display: flex;
       align-items: center;
@@ -52,6 +53,7 @@ export const ProductsContainer = styled.ul`
         display: flex;
         align-items: center;
         padding: 12px;
+        width: 50px;
 
         background: rgba(0, 0, 0, 0.1);
 

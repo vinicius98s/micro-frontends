@@ -11,33 +11,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr v-for="product in cart" :key="product.id">
           <td>
-            <img
-              src="https://www.flightclub.com/media/catalog/product/cache/1/image/1600x1140/9df78eab33525d08d6e5fb8d27136e95/1/4/143710_01.jpg"
-              alt="Yeezy boost 350"
-            />
+            <img :src="product.image" :alt="product.title" />
           </td>
           <td>
-            <strong>Yeezy Boost 350</strong>
-            <span>R$ 2.000,00</span>
+            <strong>{{ product.title }}</strong>
+            <span>{{ product.formattedPrice }}</span>
           </td>
           <td>
             <div>
-              <button>
+              <button @click="decreaseProductAmount(product)">
                 <ion-icon name="remove-circle-outline"></ion-icon>
               </button>
-              <input type="number" readonly :value="2" />
-              <button>
-                <ion-icon name="add-circle-outline" size color></ion-icon>
+              <input type="number" readonly :value="product.amount" />
+              <button @click="incrementProductAmount(product)">
+                <ion-icon name="add-circle-outline"></ion-icon>
               </button>
             </div>
           </td>
           <td>
-            <strong>R$ 4.000,00</strong>
+            <strong>{{ product.subtotal }}</strong>
           </td>
           <td>
-            <button>
+            <button @click="onRemoveFromCart(product.id)">
               <ion-icon name="trash"></ion-icon>
             </button>
           </td>
@@ -48,14 +45,33 @@
       <button>Finalizar pedido</button>
       <div>
         <span>TOTAL</span>
-        <strong>R$ 8.000,00</strong>
+        <strong>{{ total }}</strong>
       </div>
     </footer>
   </div>
 </template>
 
 <script>
-export default {};
+import { removeFromCart, updateAmount } from "../../store/actions/cart";
+
+export default {
+  props: {
+    cart: Array,
+    dispatch: Function,
+    total: String
+  },
+  methods: {
+    onRemoveFromCart(id) {
+      this.dispatch(removeFromCart(id));
+    },
+    incrementProductAmount(product) {
+      this.dispatch(updateAmount(product.id, product.amount + 1));
+    },
+    decreaseProductAmount(product) {
+      this.dispatch(updateAmount(product.id, product.amount - 1));
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

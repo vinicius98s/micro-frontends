@@ -1,5 +1,6 @@
 export const ADD_TO_CART = "ADD_TO_CART";
-export const DECREASE_COUNTER = "DECREASE_COUNTER";
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const UPDATE_PRODUCT_CART_AMOUNT = "UPDATE_PRODUCT_CART_AMOUNT";
 
 export function addToCart(product) {
   return {
@@ -8,9 +9,19 @@ export function addToCart(product) {
   };
 }
 
-export function decreaseCounter(value) {
+export function removeFromCart(productId) {
   return {
-    type: DECREASE_COUNTER,
-    value
+    type: REMOVE_FROM_CART,
+    productId
+  };
+}
+
+export function updateAmount(id, amount) {
+  return {
+    type: UPDATE_PRODUCT_CART_AMOUNT,
+    payload: {
+      id,
+      amount
+    }
   };
 }

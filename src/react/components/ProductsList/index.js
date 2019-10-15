@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import api from "../../../services/api";
 import formatPrice from "../../../utils/formatPrice";
@@ -8,8 +8,25 @@ import { addToCart } from "../../../store/actions/cart";
 import { ProductsContainer } from "./styles";
 
 export default function ProductList() {
-  const [, dispatch] = useReducer();
   const [products, setProducts] = useState([]);
+
+  const updateProducts = (cart, newProducts) => {
+    const cartIds = Object.assign(
+      {},
+      ...cart.map(product => ({ [product["id"]]: product }))
+    );
+
+    const updateProductsFromCart = arrProducts =>
+      arrProducts.map(product => cartIds[product.id] || product);
+
+    if (newProducts) {
+      setProducts(updateProductsFromCart(newProducts));
+    } else {
+      setProducts(updateProductsFromCart(products));
+    }
+  };
+
+  const [store, dispatch] = useReducer(updateProducts, "cart");
 
   useEffect(() => {
     (async () => {
@@ -20,7 +37,11 @@ export default function ProductList() {
         formattedPrice: formatPrice(product.price)
       }));
 
-      setProducts(products);
+      if (store.cart.length) {
+        updateProducts(store.cart, products);
+      } else {
+        setProducts(products);
+      }
     })();
   }, []);
 
@@ -38,7 +59,7 @@ export default function ProductList() {
 
           <button onClick={() => onAddProduct(product)}>
             <div>
-              <ion-icon name="cart"></ion-icon> 3
+              <ion-icon name="cart"></ion-icon> {product.amount}
             </div>
             <span>ADD TO CART</span>
           </button>

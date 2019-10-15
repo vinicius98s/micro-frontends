@@ -19,7 +19,7 @@ function render() {
       document.body.appendChild(vueRoot);
 
       return new Vue({
-        el: "#vue",
+        el: vueRoot,
         render: h => h(VueApp)
       });
     case "/":
@@ -28,7 +28,7 @@ function render() {
       reactRoot.id = "react";
       document.body.appendChild(reactRoot);
 
-      return ReactDOM.render(<ReactApp />, document.getElementById("react"));
+      return ReactDOM.render(<ReactApp />, reactRoot);
   }
 }
 
