@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 
 import api from "../../../services/api";
 import formatPrice from "../../../utils/formatPrice";
-import useReducer from "../../../utils/useReducer";
+import useRedux from "../../../utils/useRedux";
 import { addToCart } from "../../../store/actions/cart";
 
 import { ProductsContainer } from "./styles";
@@ -26,7 +26,7 @@ export default function ProductList() {
     }
   };
 
-  const [store, dispatch] = useReducer(updateProducts, "cart");
+  const { state, dispatch } = useRedux(updateProducts, "cart");
 
   useEffect(() => {
     (async () => {
@@ -37,8 +37,8 @@ export default function ProductList() {
         formattedPrice: formatPrice(product.price)
       }));
 
-      if (store.cart.length) {
-        updateProducts(store.cart, products);
+      if (state.cart.length) {
+        updateProducts(state.cart, products);
       } else {
         setProducts(products);
       }

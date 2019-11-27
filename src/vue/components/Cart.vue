@@ -58,6 +58,8 @@ export default {
   props: {
     cart: Array,
     dispatch: Function,
+    unsubscribe: Function,
+    shouldUnsubscribe: Boolean,
     total: String
   },
   methods: {
@@ -70,6 +72,10 @@ export default {
     decreaseProductAmount(product) {
       this.dispatch(updateAmount(product.id, product.amount - 1));
     }
+  },
+  updated() {
+    console.log(this.shouldUnsubscribe);
+    if (this.shouldUnsubscribe) this.unsubscribe();
   }
 };
 </script>

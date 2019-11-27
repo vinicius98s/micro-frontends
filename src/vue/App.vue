@@ -1,10 +1,16 @@
 <template>
-  <Cart v-if="currentRoute === '/cart'" :cart="cart" :dispatch="dispatch" :total="total" />
+  <Cart
+    :shouldUnsubscribe="currentRoute !== '/cart'"
+    :unsubscribe="unsubscribe"
+    :cart="cart"
+    :dispatch="dispatch"
+    :total="total"
+  />
 </template>
 
 <script>
 import Cart from "./components/Cart.vue";
-import useReducer from "../utils/useReducer";
+import useRedux from "../utils/useRedux";
 import formatPrice from "../utils/formatPrice";
 import routes from "../routes.js";
 
@@ -13,6 +19,7 @@ export default {
     return {
       cart: [],
       dispatch: null,
+      unsubscribe: null,
       total: formatPrice(0),
       currentRoute: routes.currentRoute()
     };
@@ -36,11 +43,15 @@ export default {
     Cart
   },
   created() {
-    const [store, dispatch] = useReducer(this.updateCart, "cart");
-    if (store.cart.length) {
-      this.updateCart(store.cart);
+    const { state, dispatch, unsubscribe } = useRedux(this.updateCart, "cart");
+    if (state.cart.length) {
+      this.updateCart(state.cart);
     }
     this.dispatch = dispatch;
+    this.unsubscribe = unsubscribe;
+  },
+  updated() {
+    console.log("UPDATED");
   }
 };
 </script>

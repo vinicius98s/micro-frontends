@@ -1,6 +1,6 @@
 import logo from "../assets/images/logo.svg";
 import route from "../routes";
-import useReducer from "../utils/useReducer";
+import useRedux from "../utils/useRedux";
 
 const template = document.createElement("template");
 
@@ -77,16 +77,18 @@ class Header extends HTMLElement {
 
     this._updateCartQuantity = this._updateCartQuantity.bind(this);
 
+    const { state, unsubscribe } = useRedux(this._updateCartQuantity, "cart");
+    this.unsubscribe = unsubscribe;
+    this.cart = state.cart;
+
     this.$cartButton = shadowRoot.querySelector(".cart");
     this.$totalItems = shadowRoot.querySelector("#total-items");
     this.$logoButton = shadowRoot.querySelector("button");
   }
 
   connectedCallback() {
-    const [{ cart }] = useReducer(this._updateCartQuantity, "cart");
-
-    if (cart.length) {
-      this._updateCartQuantity(cart);
+    if (this.cart.length) {
+      this._updateCartQuantity(this.cart);
     }
 
     this.$logoButton.addEventListener("click", this._navigateHome);
@@ -96,6 +98,7 @@ class Header extends HTMLElement {
   disconnectedCallback() {
     this.$logoButton.removeEventListener("click", this._navigateHome);
     this.$cartButton.removeEventListener("click", this._navigateToCart);
+    this.unsubscribe();
   }
 
   _updateCartQuantity(cart) {
